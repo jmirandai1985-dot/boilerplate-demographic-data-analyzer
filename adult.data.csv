@@ -1,15 +1,12 @@
-
 import pandas as pd
 
 def calculate_demographic_data(print_data=True):
-    ruta_archivo = "adult.data.csv"
-    
     try:
-        df = pd.read_csv(ruta_archivo)
+        df = pd.read_csv("adult.data.csv")
         if 'race' not in df.columns:
             raise KeyError
     except Exception:
-        df = pd.read_csv(ruta_archivo, header=None, names=[
+        df = pd.read_csv("adult.data.csv", header=None, names=[
             "age", "workclass", "fnlwgt", "education", "education-num",
             "marital-status", "occupation", "relationship", "race", "sex",
             "capital-gain", "capital-loss", "hours-per-week", "native-country", "salary"
