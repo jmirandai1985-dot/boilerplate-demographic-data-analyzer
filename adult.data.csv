@@ -4,24 +4,19 @@ def calculate_demographic_data(print_data=True):
     ruta_archivo = "adult.data.csv"
     
     try:
-        # Intentamos leerlo asumiendo que ya tiene encabezados (como tu archivo local)
         df = pd.read_csv(ruta_archivo)
-        # Si no encuentra la columna 'race', provocamos el salto al plan B
         if 'race' not in df.columns:
             raise KeyError
     except Exception:
-        # PLAN B: Si falló lo anterior, lo lee como el archivo original sin encabezados
         df = pd.read_csv(ruta_archivo, header=None, names=[
             "age", "workclass", "fnlwgt", "education", "education-num",
             "marital-status", "occupation", "relationship", "race", "sex",
             "capital-gain", "capital-loss", "hours-per-week", "native-country", "salary"
         ])
 
-    # Limpieza de espacios en blanco en las columnas de texto
     for col in df.select_dtypes(include=['object']).columns:
         df[col] = df[col].astype(str).str.strip()
 
-    # --- CÁLCULOS PRINCIPALES ---
     race_count = df['race'].value_counts()
 
     average_age_men = round(df[df['sex'] == 'Male']['age'].mean(), 1)
